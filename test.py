@@ -24,8 +24,7 @@ desired_capabilities = {
     'version': "36",
 }
 
-driver = webdriver.Remote(desired_capabilities=desired_capabilities,
-                          command_executor=sauce_url)
+driver = webdriver.Remote(desired_capabilities=desired_capabilities, command_executor=sauce_url)
 driver.implicitly_wait(10)
 # End Saucelabs connection
 
@@ -64,4 +63,7 @@ driver.quit()
 
 # Report test results back to Sauce Labs
 sauce_client = SauceClient("betweenbrain", "e2007f7b-afd4-43a3-af7f-c5087c82199a")
-sauce_client.jobs.update_job(driver.session_id, passed=True, name=os.environ["TRAVIS_BUILD_NUMBER"])
+
+# Enable running test locally without Travis
+build_name = os.environ.get('TRAVIS_BUILD_NUMBER','Local Test')
+sauce_client.jobs.update_job(driver.session_id, passed=True, name=build_name)
