@@ -42,16 +42,15 @@ class BasePage(object):
     self.driver.get(self.url)
 
   def assertSectionTitle(self, title):
-    sectionTitleElement = driver.find_element_by_css_selector(".espn-logo .section-title")
-    assert sectionTitleElement.text == title
+    assert title in self.driver.title
 
 class HomePage(BasePage):
   url = "http://espn.go.com/"
 
   def clickScoresLink(self):
-    parentElement = self.driver.find_element_by_name("&lpos=sitenavdefault&lid=sitenav_nfl")
+    parentElement = self.driver.find_element_by_name("&lpos=sitenavdefault+sitenav_nfl")
     ActionChains(driver).move_to_element(parentElement).perform()
-    driver.find_element_by_name("&lpos=sitenavdefault&lid=nfl_scores").click()
+    self.driver.find_element_by_name("&lpos=sitenavdefault+nfl_nfl+scoreboard").click()
 
 ##
 # Execute test
